@@ -9,7 +9,7 @@
     <Window.CommandBindings>
         <CommandBinding Command="New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
     </Window.CommandBindings>
-    
+
     <Grid Margin="10">
 
         <Grid.RowDefinitions>
@@ -41,14 +41,21 @@
             </Menu>
         </DockPanel>
 
+        <Label Grid.Column="0" Grid.Row="1">Files</Label>
 
-        <Label Grid.Column="0" Grid.Row="1"> Files</Label>
-        
         <ListBox Grid.Row="2" x:Name="lstNames" />
         <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,0">
             <TextBox x:Name="txtName" />
             <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddName_Click">Add Name</Button>
         </StackPanel>
+
+        <RichTextBox Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
+            <FlowDocument>
+                <Paragraph>
+                    <Run Text="RichTextBox"/>
+                </Paragraph>
+            </FlowDocument>
+        </RichTextBox>
 
     </Grid>
 </Window>
