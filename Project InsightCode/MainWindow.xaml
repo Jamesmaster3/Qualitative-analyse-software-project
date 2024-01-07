@@ -25,6 +25,8 @@
             <ColumnDefinition Width="150" />
         </Grid.ColumnDefinitions>
 
+        <GridSplitter Grid.Row ="2" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
@@ -44,10 +46,11 @@
 
         <Label Grid.Column="0" Grid.Row="1">Files</Label>
 
-        <ListBox Grid.Row="2" x:Name="lstNames" />
-        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,0">
+        <ListBox Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5"/>
+        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0">
             <TextBox x:Name="tagName" />
             <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddTag_Click" Padding="5,2">Add tag</Button>
+            <local:LimitedInputUserControl Title="Enter Title:" MaxLength="30" Height="50"/>
         </StackPanel>
 
         <RichTextBox Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
