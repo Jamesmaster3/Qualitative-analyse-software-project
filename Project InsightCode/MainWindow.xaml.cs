@@ -21,13 +21,13 @@ namespace Project_InsightCode
             InitializeComponent();
         }
 
-        private void ButtonAddName_Click(object sender, RoutedEventArgs e)
+        private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtName.Text) && !lstNames.Items.Contains(txtName.Text))
+            if (!string.IsNullOrWhiteSpace(tagName.Text) && !lstNames.Items.Contains(tagName.Text))
                 // Test to make sure the input box is not empty and the name doesn't already exist
             {
-                lstNames.Items.Add(txtName.Text);
-                txtName.Clear();
+                lstNames.Items.Add(tagName.Text);
+                tagName.Clear();
             }
         }
 
@@ -36,9 +36,9 @@ namespace Project_InsightCode
             e.CanExecute = true;
         }
 
-        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) // Have to find out what this is for later
         {
-            txtName.Text = "";
+            tagName.Text = "";
         }
     }
 }

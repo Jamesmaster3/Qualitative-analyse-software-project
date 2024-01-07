@@ -29,6 +29,7 @@
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
                     <MenuItem Command="New" />
+                    <MenuItem Header="Add file" ToolTip="Search your computer for a text file and add it to the current project" />
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
@@ -45,8 +46,8 @@
 
         <ListBox Grid.Row="2" x:Name="lstNames" />
         <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,0,0,0">
-            <TextBox x:Name="txtName" />
-            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddName_Click">Add Name</Button>
+            <TextBox x:Name="tagName" />
+            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddTag_Click" Padding="5,2">Add tag</Button>
         </StackPanel>
 
         <RichTextBox Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
