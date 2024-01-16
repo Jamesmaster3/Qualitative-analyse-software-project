@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -51,7 +53,19 @@ namespace Project_InsightCode
             Application.Current.Shutdown();
         }
 
-  
+        private void AddFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == true)
+            {
+                /// This is nice if i only want the file name, but i actually want the whole file location and only show the file name
+                /// lstNames.Items.Add(System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName));
+                /// This is the full file text
+                /// lstNames.Items.Add(File.ReadAllText(openFileDialog.FileName));
+                /// And this the full file location
+                lstNames.Items.Add(openFileDialog.FileName);
+            }
+        }
     }
     public static class CustomCommands
     {

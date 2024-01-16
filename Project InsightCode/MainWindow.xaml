@@ -39,7 +39,7 @@
             <Menu DockPanel.Dock="Top" Grid.ColumnSpan="3">
                 <MenuItem Header="_File">
                     <MenuItem Command="New" />
-                    <MenuItem Header="Add file" ToolTip="Search your computer for a text file and add it to the current project" />
+                    <MenuItem Header="Add file" ToolTip="Search your computer for a text file and add it to the current project" Click="AddFile_Click" />
                     <Separator />
                     <MenuItem Command="local:CustomCommands.Exit" />
                 </MenuItem>
@@ -75,7 +75,7 @@
             <local:LimitedInputUserControl Title="Enter Title:" MaxLength="30" Height="50"/>
         </StackPanel>
 
-        <RichTextBox Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
+        <RichTextBox x:Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
