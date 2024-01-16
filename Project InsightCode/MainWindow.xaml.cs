@@ -23,16 +23,6 @@ namespace Project_InsightCode
             InitializeComponent();
         }
 
-        private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tagName.Text) && !lstNames.Items.Contains(tagName.Text))
-                // Test to make sure the input box is not empty and the name doesn't already exist
-            {
-                lstNames.Items.Add(tagName.Text);
-                tagName.Clear();
-            }
-        }
-
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -51,6 +41,16 @@ namespace Project_InsightCode
         private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(tagName.Text) && !lstNames.Items.Contains(tagName.Text))
+            // Test to make sure the input box is not empty and the name doesn't already exist
+            {
+                lstNames.Items.Add(tagName.Text);
+                tagName.Clear();
+            }
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
