@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -18,9 +19,12 @@ namespace Project_InsightCode
     /// </summary>
     public partial class MainWindow : Window
     {
+        private ObservableCollection<TextFile> textFiles = new ObservableCollection<TextFile>();
         public MainWindow()
         {
             InitializeComponent();
+            lstNames.ItemsSource = textFiles;
+
         }
 
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -45,25 +49,30 @@ namespace Project_InsightCode
 
         private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(tagName.Text) && !lstNames.Items.Contains(tagName.Text))
+            if (!string.IsNullOrWhiteSpace(tagName.txtLimitedInput.Text) && !lstNames.Items.Contains(tagName.txtLimitedInput.Text))
             // Test to make sure the input box is not empty and the name doesn't already exist
             {
-                lstNames.Items.Add(tagName.Text);
-                tagName.Clear();
+                tagList.Items.Add(tagName.txtLimitedInput.Text);
+                tagName.txtLimitedInput.Clear();
             }
         }
 
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
+            
+            openFileDialog.Filter = "Text files (*.txt;*.docx)|*.txt;.docx|All files (*.*)|*.*";
+            openFileDialog.Multiselect = true;
+            openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
-                /// This is nice if i only want the file name, but i actually want the whole file location and only show the file name
-                /// lstNames.Items.Add(System.IO.Path.GetFileNameWithoutExtension(openFileDialog.FileName));
-                /// This is the full file text
-                /// lstNames.Items.Add(File.ReadAllText(openFileDialog.FileName));
-                /// And this the full file location
-                lstNames.Items.Add(openFileDialog.FileName);
+                foreach (string filepath in openFileDialog.FileNames) // dit klopt nu want nu vraag ik eigenlijk twee keer hetzelfde
+                    try{
+                        textFiles.Add(new TextFile(filepath));
+                    }
+                    catch (Exception ee) {
+                        MessageBox.Show(ee.Message);
+                    }
             }
         }
     }

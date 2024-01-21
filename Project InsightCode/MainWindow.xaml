@@ -51,8 +51,9 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Background="White"> <!-- BUttons don't work right now, but it's a good exercise, maybe add commands later (search for microsoft tutorial maybe, and fix images not showing -->
+
+        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Background="White">
+            <!-- BUttons don't work right now, but it's a good exercise, maybe add commands later (search for microsoft tutorial maybe, and fix images not showing -->
             <Button Margin="0,0,3,0">
                 <Image Source="resources\copy_button.png" Width="15" Height="15"/>
             </Button>
@@ -64,18 +65,25 @@
             </Button>
 
         </StackPanel>
-        
+
 
         <Label Grid.Column="0" Grid.Row="1">Project files</Label>
 
-        <ListBox Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5"/> <!-- I should eventually delete this and replace it with the full tag system-->
-        <StackPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0">
-            <TextBox x:Name="tagName" />
-            <Button x:Name="btnAdd" Margin="0,5,0,0" Click="ButtonAddTag_Click" Padding="5,2">Add tag</Button>
-            <local:LimitedInputUserControl Title="Enter Title:" MaxLength="30" Height="50"/>
-        </StackPanel>
+        <ListView Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding FileName}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
-        <RichTextBox x:Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
+        <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Background="White" LastChildFill="True">
+            <local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>
+            <Button x:Name="btnAdd" Click="ButtonAddTag_Click" Padding="5,2" Content="Add tag" DockPanel.Dock="Top"/>
+            <ListView Name="tagList" Margin="0,0,0,5" Height="auto" DockPanel.Dock="Top"/>
+        </DockPanel>
+
+        <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
             <FlowDocument>
                 <Paragraph>
                     <Run Text="RichTextBox"/>
