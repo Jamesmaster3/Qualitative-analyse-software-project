@@ -19,7 +19,7 @@ namespace Project_InsightCode
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<TextFile> textFiles = new ObservableCollection<TextFile>();
+        private ObservableCollection<TextFile> textFiles = new ObservableCollection<TextFile>(); // hier een dictionary van maken of een array??
         public MainWindow()
         {
             InitializeComponent();
@@ -66,7 +66,7 @@ namespace Project_InsightCode
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
-                foreach (string filepath in openFileDialog.FileNames) // dit klopt nu want nu vraag ik eigenlijk twee keer hetzelfde
+                foreach (string filepath in openFileDialog.FileNames)
                     try{
                         textFiles.Add(new TextFile(filepath));
                     }
