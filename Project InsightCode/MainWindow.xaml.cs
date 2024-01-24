@@ -19,11 +19,10 @@ namespace Project_InsightCode
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ObservableCollection<TextFile> textFiles = new ObservableCollection<TextFile>(); // hier een dictionary van maken of een array??
         public MainWindow()
         {
             InitializeComponent();
-            lstNames.ItemsSource = textFiles;
+            this.DataContext = new ViewModel();
 
         }
 
@@ -61,27 +60,28 @@ namespace Project_InsightCode
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             
-            openFileDialog.Filter = "Text files (*.txt;*.docx)|*.txt;.docx|All files (*.*)|*.*";
+            openFileDialog.Filter = "Text files (*.txt; *.docx)|*.txt; *.docx";
             openFileDialog.Multiselect = true;
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
+                var viewModel = DataContext as ViewModel;
                 foreach (string filepath in openFileDialog.FileNames)
                     try{
-                        textFiles.Add(new TextFile(filepath));
+                        viewModel?.textFiles.Add(new TextFile(filepath));
                     }
-                    catch (Exception ee) {
-                        MessageBox.Show(ee.Message);
+                    catch (FileNotFoundException ex) {
+                        MessageBox.Show("File not found");
+                        Console.WriteLine(ex.Message);
+                    }
+                    catch (IOException ex)
+                    {
+                        MessageBox.Show("Error loading file");
+                        Console.WriteLine(ex.Message);
                     }
             }
         }
+        
     }
-    public static class CustomCommands
-    {
-        public static readonly RoutedUICommand Exit = new RoutedUICommand("Exit", "Exit", typeof(CustomCommands), new InputGestureCollection()
-            {
-                new KeyGesture(Key.F4, ModifierKeys.Alt)
-            }
-            );
-    }
+    
 }

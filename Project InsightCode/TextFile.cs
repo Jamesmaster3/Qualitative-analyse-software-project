@@ -1,9 +1,10 @@
-﻿using System.IO;
+﻿using System.ComponentModel;
+using System.IO;
 using System.Text;
 
 namespace Project_InsightCode
 {
-    public class TextFile
+    public class TextFile :INotifyPropertyChanged
     {
         private string _fileName;
         private string _fileText;
@@ -20,13 +21,27 @@ namespace Project_InsightCode
         public string FileName
         {
             get { return _fileName; }
-            set { _fileName = value; }
+            set 
+            { 
+                _fileName = value;
+                OnPropertyChanged(nameof(FileName));
+                
+            }
         }
 
         public string FileText
         {
             get { return _fileText; }
-            set { _fileText = value; }
+            set
+            {
+                _fileText = value;
+                OnPropertyChanged(nameof(FileText));
+            }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
