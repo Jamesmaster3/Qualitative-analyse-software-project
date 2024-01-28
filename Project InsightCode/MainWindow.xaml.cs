@@ -81,7 +81,11 @@ namespace Project_InsightCode
                     }
             }
         }
-        
+
+        private void DeleteFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
     
 }

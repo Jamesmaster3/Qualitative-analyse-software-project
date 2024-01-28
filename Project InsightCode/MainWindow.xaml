@@ -8,7 +8,9 @@
         Title="Project InsightCode" Height="450" Width="800">
     <Window.CommandBindings>
         <CommandBinding Command="New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
-        <!--  <CommandBinding Command="CustomCommands.Exit"  CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" /> -->
+        <CommandBinding Command="Open" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
+        <CommandBinding Command="Save" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
+        <CommandBinding Command="local:CustomCommands.Exit"  CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
     </Window.CommandBindings>
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
@@ -41,7 +43,7 @@
                     <MenuItem Command="New" />
                     <MenuItem Header="Add file" Click="AddFile_Click" ToolTip="Search your computer for a text file and add it to the current project"  />
                     <Separator />
-                    <!-- <MenuItem Command="local:CustomCommands.Exit" />-->
+                    <MenuItem Command="local:CustomCommands.Exit" />
                 </MenuItem>
 
                 <MenuItem Header="_Edit">
@@ -52,30 +54,62 @@
             </Menu>
         </DockPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" Margin="5" Background="White">
-            <!-- BUttons don't work right now, but it's a good exercise, maybe add commands later (search for microsoft tutorial maybe, and fix images not showing -->
-            <Button Margin="0,0,3,0">
-                <Image Source="resources\copy_button.png" Width="15" Height="15"/>
-            </Button>
-            <Button Margin="0,0,3,0" >
-                <Image Source="resources\cut_button.png" Width="15" Height="15"/>
-            </Button>
-            <Button Margin="0,0,3,0">
-                <Image Source="resources\paste_button.png" Width="15" Height="15"/>
-            </Button>
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="0,5,5,5">
+            <ToolBarTray DockPanel.Dock="Top">
+                <ToolBar>
+                    <Button Click="AddFile_Click" ToolTip="Search your computer for a text file and add it to the current project" Content="Add file" />
+                    <Button Command="Open" Content="Open" />
+                    <Button Command="Save" Content="Save" />
+                    <Separator />
+                    <Button Command="Cut" ToolTip="Cut selection to Windows Clipboard.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="resources/cut_button.png" Height="15"/>
+                            <TextBlock Margin="3,0,0,0">Cut</TextBlock>
+                        </StackPanel>
+                        
+                    </Button>
+                    <Button Command="Copy" ToolTip="Copy selection to Windows Clipboard.">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="resources/copy_button.png" Height="15"/>
+                            <TextBlock Margin="3,0,0,0">Copy</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Button Command="Paste" ToolTip="Paste from Windows Clipboard.">
+                        <StackPanel Orientation="Horizontal" >
+                            <Image Source="resources/paste_button.png" Height="15"/>
+                            <TextBlock Margin="3,0,0,0">Paste</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <Separator />
+                    <Label>Font size:</Label>
+                    <ComboBox>
+                        <ComboBoxItem>10</ComboBoxItem>
+                        <ComboBoxItem IsSelected="True">12</ComboBoxItem>
+                        <ComboBoxItem>14</ComboBoxItem>
+                        <ComboBoxItem>16</ComboBoxItem>
+                    </ComboBox>
+                </ToolBar>
+            </ToolBarTray>
+        </DockPanel>
 
-        </StackPanel>
+        <DockPanel Grid.Column="0" Grid.Row="2" LastChildFill="True">
+            <Label DockPanel.Dock="Top" >Project files</Label>
 
-
-        <Label Grid.Column="0" Grid.Row="1">Project files</Label>
-
-        <ListView Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5" ItemsSource="{Binding textFiles}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding FileName}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <ListView Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5" ItemsSource="{Binding textFiles}" DockPanel.Dock="Top">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FileName}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Edit File"/>
+                        <MenuItem Header="Delete File" Click="DeleteFile_Click"/>
+                        <MenuItem Header="Add File" Click="AddFile_Click" />
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+        </DockPanel>
 
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Background="White" LastChildFill="True">
             <local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>
@@ -86,7 +120,8 @@
         <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
             <FlowDocument>
                 <Paragraph>
-                    <Run Text=""/>  <!-- {Binding FileText, Mode= TwoWay}-->
+                    <Run Text=""/>
+                    <!-- {Binding FileText, Mode= TwoWay}-->
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
