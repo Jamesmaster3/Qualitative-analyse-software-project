@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
+using System.Resources;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,7 +27,7 @@ namespace Project_InsightCode
             this.DataContext = new ViewModel();
 
         }
-
+        
         private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = true;
@@ -69,6 +71,7 @@ namespace Project_InsightCode
                 foreach (string filepath in openFileDialog.FileNames)
                     try{
                         viewModel?.textFiles.Add(new TextFile(filepath));
+                        // Adds an istance of the TextFile class to the observable collection textFiles
                     }
                     catch (FileNotFoundException ex) {
                         MessageBox.Show("File not found");
@@ -86,6 +89,16 @@ namespace Project_InsightCode
         {
 
         }
+
+        private void AddTag_Click(object sender, RoutedEventArgs e)
+        {
+            // create a tag that inherits the parent fileLocation (current working file) and that stores tagtext, index and tagname
+            // Tags should be callable in a list and searchable for file and tag name
+            
+            string text = editorView.Selection.Text;
+
+            TaggingSystem tag1 = new TaggingSystem("Test1.txt", "Tag Name one", text, 2);
+            MessageBox.Show(tag1.tagText, tag1.tagName);
+        }
     }
-    
 }

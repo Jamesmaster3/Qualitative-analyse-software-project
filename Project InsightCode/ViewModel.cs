@@ -11,7 +11,7 @@ namespace Project_InsightCode
 {
     internal class ViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<TextFile> textFiles { get; set; }
+        public ObservableCollection<TextFile> textFiles { get; set; } //collection of textfile objects
 
         public ViewModel()
         {

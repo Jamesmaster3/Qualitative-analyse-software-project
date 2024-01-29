@@ -9,7 +9,7 @@ namespace Project_InsightCode
         private string _fileName;
         private string _fileText;
 
-        public TextFile(string fileLocation)
+        public TextFile(string fileLocation) // extract filename of the file and extract the file contents
         {
             _fileName = System.IO.Path.GetFileName(fileLocation);
             using(StreamReader streamReader = new StreamReader(fileLocation, Encoding.UTF8))

@@ -88,6 +88,8 @@
                         <ComboBoxItem>14</ComboBoxItem>
                         <ComboBoxItem>16</ComboBoxItem>
                     </ComboBox>
+                    <Separator />
+                    <Button Name="AddTag" Click="AddTag_Click" Content="Tag selected text" />
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>
@@ -96,11 +98,6 @@
             <Label DockPanel.Dock="Top" >Project files</Label>
 
             <ListView Grid.Row="2" x:Name="lstNames" Margin="0,0,0,5" ItemsSource="{Binding textFiles}" DockPanel.Dock="Top">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding FileName}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
                 <ListView.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Edit File"/>
@@ -108,17 +105,22 @@
                         <MenuItem Header="Add File" Click="AddFile_Click" />
                     </ContextMenu>
                 </ListView.ContextMenu>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding FileName}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                
             </ListView>
         </DockPanel>
 
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Background="White" LastChildFill="True">
             <local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>
-            <Button x:Name="btnAdd" Click="ButtonAddTag_Click" Padding="5,2" Content="Add tag" DockPanel.Dock="Top"/>
+            <Button x:Name="btnAdd" Click="ButtonAddTag_Click" Padding="5,2" Content="Add tag name" DockPanel.Dock="Top"/>
             <ListView Name="tagList" Margin="0,0,0,5" Height="auto" DockPanel.Dock="Top"/>
         </DockPanel>
-
-        <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
-            <FlowDocument>
+        <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto"  >
+            <FlowDocument >
                 <Paragraph>
                     <Run Text=""/>
                     <!-- {Binding FileText, Mode= TwoWay}-->
