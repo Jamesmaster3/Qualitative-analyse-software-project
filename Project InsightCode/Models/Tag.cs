@@ -1,13 +1,13 @@
 ﻿namespace Project_InsightCode
 {
-    public class TaggingSystem: TextFile // a tag inherits from the file class, meaning a tag is coupled to a file. 
+    public class Tag
         // The tags should be ordered in a database or array within an array of tag objects maybe?
     {
         private string _tagName;
         private string _tagText;
         private int _tagIndex;
 
-        public TaggingSystem(string fileLocation, string tagName, string tagText, int tagIndex) : base(fileLocation)
+        public Tag(string tagName, string tagText, int tagIndex)
         {
             _tagName = tagName;
             _tagText = tagText;

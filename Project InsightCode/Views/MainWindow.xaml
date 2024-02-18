@@ -3,22 +3,29 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Project_InsightCode" d:DataContext="{d:DesignInstance Type=local:ViewModel}"
+        xmlns:local="clr-namespace:Project_InsightCode"
         mc:Ignorable="d"
-        Title="Project InsightCode" Height="450" Width="800">
-    <Window.CommandBindings>
-        <CommandBinding Command="New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
-        <CommandBinding Command="Open" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
-        <CommandBinding Command="Save" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
-        <CommandBinding Command="local:CustomCommands.Exit"  CanExecute="ExitCommand_CanExecute" Executed="ExitCommand_Executed" />
-    </Window.CommandBindings>
+        Title="mainwindow" Height="450" Width="800">
     <Window.Resources>
         <Style TargetType="{x:Type Button}">
             <Setter Property="Padding" Value="5,2"/>
             <Setter Property="Background" Value="WhiteSmoke"/>
             <Setter Property="BorderBrush" Value="WhiteSmoke"/>
         </Style>
+        <RoutedUICommand x:Key="fileExitCommand" Text="E_xit">
+            <RoutedUICommand.InputGestures>
+                <KeyGesture >Alt+F4</KeyGesture>
+            </RoutedUICommand.InputGestures>
+        </RoutedUICommand>
     </Window.Resources>
+    
+    <Window.CommandBindings>
+        <CommandBinding Command="New" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed" />
+        <CommandBinding Command="Open" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
+        <CommandBinding Command="Save" CanExecute="NewCommand_CanExecute" Executed="NewCommand_Executed"/>
+        <CommandBinding Command="{StaticResource fileExitCommand}" Executed="fileExitCommand_Executed"/>
+    </Window.CommandBindings>
+
 
     <Grid Margin="10">
 
@@ -42,8 +49,8 @@
                 <MenuItem Header="_File">
                     <MenuItem Command="New" />
                     <MenuItem Header="Add file" Click="AddFile_Click" ToolTip="Search your computer for a text file and add it to the current project"  />
-                    <Separator />
-                    <MenuItem Command="local:CustomCommands.Exit" />
+                    <Separator/>
+                    <MenuItem Command="{StaticResource fileExitCommand}"/>
                 </MenuItem>
 
                 <MenuItem Header="_Edit">
@@ -63,20 +70,20 @@
                     <Separator />
                     <Button Command="Cut" ToolTip="Cut selection to Windows Clipboard.">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="resources/cut_button.png" Height="15"/>
+                            <Image Source="content/cut_button.png" Height="15"/> 
                             <TextBlock Margin="3,0,0,0">Cut</TextBlock>
                         </StackPanel>
                         
                     </Button>
                     <Button Command="Copy" ToolTip="Copy selection to Windows Clipboard.">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="resources/copy_button.png" Height="15"/>
+                            <Image Source="content/copy_button.png" Height="15"/>
                             <TextBlock Margin="3,0,0,0">Copy</TextBlock>
                         </StackPanel>
                     </Button>
                     <Button Command="Paste" ToolTip="Paste from Windows Clipboard.">
                         <StackPanel Orientation="Horizontal" >
-                            <Image Source="resources/paste_button.png" Height="15"/>
+                            <Image Source="content/paste_button.png" Height="15"/> 
                             <TextBlock Margin="3,0,0,0">Paste</TextBlock>
                         </StackPanel>
                     </Button>
@@ -90,6 +97,8 @@
                     </ComboBox>
                     <Separator />
                     <Button Name="AddTag" Click="AddTag_Click" Content="Tag selected text" />
+                    <Button Name="Test"  Command="{Binding ShowWindowCommand}" CommandParameter="{Binding RelativeSource={
+             RelativeSource AncestorType={x:Type Window}}}" Content="Test"/>
                 </ToolBar>
             </ToolBarTray>
         </DockPanel>
@@ -117,9 +126,15 @@
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Background="White" LastChildFill="True">
             <local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>
             <Button x:Name="btnAdd" Click="ButtonAddTag_Click" Padding="5,2" Content="Add tag name" DockPanel.Dock="Top"/>
-            <ListView Name="tagList" Margin="0,0,0,5" Height="auto" DockPanel.Dock="Top"/>
+            <ListView Name="tagList" Margin="0,0,0,5" Height="auto" DockPanel.Dock="Top" ItemsSource="{Binding tags}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding tagName}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </DockPanel>
-        <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" TextChanged="editorView_TextChanged"  >
+        <RichTextBox Name="editorView"  Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Margin="5,0,5,5" Grid.RowSpan="2" Grid.Row="2" VerticalAlignment="Stretch" Height="Auto" >
             <FlowDocument >
                 <Paragraph>
                     <Run Text=""/>

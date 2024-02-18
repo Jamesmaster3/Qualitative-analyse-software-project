@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Project_InsightCode.ViewModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
@@ -24,28 +25,9 @@ namespace Project_InsightCode
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new ViewModel();
+            MainViewModel mainViewModel = new MainViewModel();
+            this.DataContext = mainViewModel;
 
-        }
-        
-        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) // Have to find out what this is for later
-        {
-            { };
-        }
-
-        private void ExitCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-        private void ExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
         }
 
         private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
@@ -67,7 +49,7 @@ namespace Project_InsightCode
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (openFileDialog.ShowDialog() == true)
             {
-                var viewModel = DataContext as ViewModel;
+                var viewModel = DataContext as MainViewModel;
                 foreach (string filepath in openFileDialog.FileNames)
                     try{
                         viewModel?.textFiles.Add(new TextFile(filepath));
@@ -97,8 +79,23 @@ namespace Project_InsightCode
             
             string text = editorView.Selection.Text;
 
-            TaggingSystem tag1 = new TaggingSystem("Test1.txt", "Tag Name one", text, 2);
+            Tag tag1 = new Tag("Tag Name one", text, 2);
             MessageBox.Show(tag1.tagText, tag1.tagName);
         }
+
+        private void fileExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Close();
+        }
+        private void NewCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void NewCommand_Executed(object sender, ExecutedRoutedEventArgs e) // Have to find out what this is for later
+        {
+            { };
+        }
+
     }
 }
