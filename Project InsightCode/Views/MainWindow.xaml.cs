@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Project_InsightCode.Models;
 using Project_InsightCode.ViewModel;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace Project_InsightCode
             if (!string.IsNullOrWhiteSpace(tagName.txtLimitedInput.Text) && !lstNames.Items.Contains(tagName.txtLimitedInput.Text))
             // Test to make sure the input box is not empty and the name doesn't already exist
             {
-                tagList.Items.Add(tagName.txtLimitedInput.Text);
+                TagManager.AddTag(new Tag(tagName.txtLimitedInput.Text));
                 tagName.txtLimitedInput.Clear();
             }
         }
@@ -79,8 +80,7 @@ namespace Project_InsightCode
             
             string text = editorView.Selection.Text;
 
-            Tag tag1 = new Tag("Tag Name one", text, 2);
-            MessageBox.Show(tag1.tagText, tag1.tagName);
+            TagManager.AddTagText("Test", text, 1, 3);
         }
 
         private void fileExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)

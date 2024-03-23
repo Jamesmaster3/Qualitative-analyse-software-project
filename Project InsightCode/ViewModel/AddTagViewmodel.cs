@@ -29,7 +29,7 @@ namespace Project_InsightCode.ViewModel
 
         private void AddTag(object obj)
         {
-            TagManager.AddTag(new Tag(Name, "yes", 0)) ;
+            TagManager.AddTag(new Tag(Name)) ;
         }
 
 
