@@ -124,8 +124,10 @@
         </DockPanel>
 
         <DockPanel Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Background="White" LastChildFill="True">
-            <local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>
-            <Button x:Name="btnAdd" Click="ButtonAddTag_Click" Padding="5,2" Content="Add tag name" DockPanel.Dock="Top"/>
+            <Label Content="Enter title:" DockPanel.Dock="Top"/>
+            <TextBox x:Name="tagName" MaxLength="30" Text="{Binding NameOfTag}" Height="40" DockPanel.Dock="Top" ScrollViewer.VerticalScrollBarVisibility="Auto" TextWrapping="Wrap"/>
+            <!--<local:LimitedInputUserControl x:Name="tagName" Title="Enter Title:" MaxLength="30" Height="50" DockPanel.Dock="Top"/>-->
+            <Button x:Name="btnAdd" Command="{Binding AddTagCommand}" Padding="5,2" Content="Add tag name" DockPanel.Dock="Top"/>
             <ListView Name="tagList" Margin="0,0,0,5" Height="auto" DockPanel.Dock="Top" ItemsSource="{Binding tags}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

@@ -30,17 +30,6 @@ namespace Project_InsightCode
             this.DataContext = mainViewModel;
 
         }
-
-        private void ButtonAddTag_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrWhiteSpace(tagName.txtLimitedInput.Text) && !lstNames.Items.Contains(tagName.txtLimitedInput.Text))
-            // Test to make sure the input box is not empty and the name doesn't already exist
-            {
-                TagManager.AddTag(new Tag(tagName.txtLimitedInput.Text));
-                tagName.txtLimitedInput.Clear();
-            }
-        }
-
         private void AddFile_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -75,12 +64,19 @@ namespace Project_InsightCode
 
         private void AddTag_Click(object sender, RoutedEventArgs e)
         {
-            // create a tag that inherits the parent fileLocation (current working file) and that stores tagtext, index and tagname
-            // Tags should be callable in a list and searchable for file and tag name
-            
+            // CONVERT THIS TO A COMMAND!!!
             string text = editorView.Selection.Text;
 
-            TagManager.AddTagText("Test", text, 1, 3);
+            if (tagList.SelectedItem != null)
+            {
+                Tag obj = (Tag)tagList.SelectedItem;
+                string NameOfTag = obj.tagName;
+                TagManager.AddTagText(NameOfTag, text, 1, 3);
+            }
+            else
+            {
+                MessageBox.Show("No item selected");
+            }
         }
 
         private void fileExitCommand_Executed(object sender, ExecutedRoutedEventArgs e)
